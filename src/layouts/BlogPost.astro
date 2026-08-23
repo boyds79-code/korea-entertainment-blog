@@ -1,0 +1,113 @@
+---
+import Base from './Base.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags: string[];
+  heroImage?: string;
+  heroImageAlt?: string;
+  heroImageCredit?: string;
+  heroImageCreditUrl?: string;
+}
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  tags,
+  heroImage,
+  heroImageAlt,
+  heroImageCredit,
+  heroImageCreditUrl,
+} = Astro.props;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  ...(heroImage ? { image: heroImage } : {}),
+};
+---
+<Base title={`${title} | K-Entertainment, Explained`} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <article>
+    <header class="post-header">
+      <h1>{title}</h1>
+      <p class="meta">
+        {pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        {tags.length > 0 && (
+          <span class="tags"> · {tags.join(', ')}</span>
+        )}
+      </p>
+    </header>
+
+    {heroImage && (
+      <figure class="hero">
+        <img src={heroImage} alt={heroImageAlt || title} loading="eager" />
+        {heroImageCredit && (
+          <figcaption>
+            {heroImageCreditUrl ? (
+              <a href={heroImageCreditUrl} target="_blank" rel="noopener nofollow">{heroImageCredit}</a>
+            ) : (
+              heroImageCredit
+            )}
+          </figcaption>
+        )}
+      </figure>
+    )}
+
+    <AdSlot position="top" />
+
+    <div class="prose">
+      <slot />
+    </div>
+
+    <AdSlot position="bottom" />
+  </article>
+</Base>
+
+<style>
+  .post-header { margin-bottom: 1rem; }
+  .meta { color: #666; font-size: 0.85rem; }
+  .hero { margin: 0 0 1.5rem; }
+  .hero img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .hero figcaption { font-size: 0.75rem; color: #999; margin-top: 0.4rem; text-align: right; }
+  .hero figcaption a { color: #999; }
+  .prose { font-size: 1.0625rem; }
+  .prose :global(h2) { margin-top: 2.5rem; padding-bottom: 0.4rem; border-bottom: 1px solid #eee; }
+  .prose :global(h3) { margin-top: 1.75rem; }
+  .prose :global(p) { margin: 1.1rem 0; }
+  .prose :global(p:first-of-type) { font-size: 1.15rem; color: var(--text); }
+  .prose :global(strong) { color: var(--text); }
+  .prose :global(ul), .prose :global(ol) { margin: 1rem 0; padding-left: 1.4rem; }
+  .prose :global(li) { margin: 0.4rem 0; }
+  .prose :global(li p) { margin: 0.3rem 0; }
+  .prose :global(blockquote) {
+    margin: 1.5rem 0;
+    padding: 0.9rem 1.25rem;
+    background: #fdf1f8;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+  }
+  .prose :global(blockquote p) { margin: 0.3rem 0; }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.95rem;
+  }
+  .prose :global(th), .prose :global(td) {
+    border: 1px solid #eee;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+  }
+  .prose :global(th) { background: #fafafa; font-weight: 600; }
+  .prose :global(img) { width: 100%; height: auto; border-radius: 8px; margin: 1.5rem 0; display: block; }
+</style>

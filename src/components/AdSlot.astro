@@ -1,0 +1,52 @@
+---
+// 애드센스 광고 슬롯. 승인받기 전에는 자리표시자만 보여주고,
+// 승인 후 PUBLIC_ADSENSE_CLIENT / PUBLIC_ADSENSE_SLOT_* 환경변수를 채우면
+// 실제 광고 코드가 활성화됩니다.
+interface Props {
+  position: 'top' | 'bottom';
+}
+const { position } = Astro.props;
+
+const client = import.meta.env.PUBLIC_ADSENSE_CLIENT; // 예: ca-pub-1234567890123456
+const slot =
+  position === 'top'
+    ? import.meta.env.PUBLIC_ADSENSE_SLOT_TOP
+    : import.meta.env.PUBLIC_ADSENSE_SLOT_BOTTOM;
+
+const isConfigured = Boolean(client && slot);
+---
+
+{isConfigured ? (
+  <div class="ad-slot" data-position={position}>
+    <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`} crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client={client}
+      data-ad-slot={slot}
+      data-ad-format="auto"
+      data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+) : (
+  <!-- 애드센스 승인 전: 자리만 잡아둠. 레이아웃 확인용 -->
+  <div class="ad-slot ad-slot--placeholder" data-position={position}>
+    <span>Ad slot ({position}) — set PUBLIC_ADSENSE_CLIENT & PUBLIC_ADSENSE_SLOT_{position.toUpperCase()} to activate</span>
+  </div>
+)}
+
+<style>
+  .ad-slot {
+    margin: 2rem 0;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ad-slot--placeholder {
+    border: 1px dashed #ccc;
+    color: #999;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    background: #fafafa;
+  }
+</style>

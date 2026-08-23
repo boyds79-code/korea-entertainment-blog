@@ -1,0 +1,22 @@
+{
+  "name": "korea-entertainment-blog",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "generate": "node scripts/generate-post.mjs",
+    "photos": "node scripts/add-photos.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.9",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^4.16.0",
+    "js-yaml": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=18.17.0"
+  }
+}

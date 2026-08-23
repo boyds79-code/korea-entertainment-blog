@@ -1,0 +1,75 @@
+name: Daily draft post
+
+on:
+  schedule:
+    # 매일 00:00 UTC = 08:00 Asia/Manila. 시간을 바꾸려면 이 cron 값을 수정하세요.
+    # (cron은 항상 UTC 기준입니다: https://crontab.guru)
+    - cron: '0 0 * * *'
+  workflow_dispatch: {} # 수동으로도 "Run workflow" 버튼으로 즉시 실행 가능
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: daily-post
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          # 'lts/*'로 두면 그때그때 최신 LTS를 자동으로 씁니다 - 버전을 고정하면
+          # 시간이 지나면서 매번 이런 "이 버전은 곧 지원 종료" 경고가 반복됩니다.
+          node-version: 'lts/*'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate draft post
+        id: generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+        run: npm run generate
+
+      - name: Open pull request for human review
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "New draft: ${{ env.POST_TITLE }}"
+          branch: "draft/${{ env.POST_SLUG }}"
+          delete-branch: true
+          title: "📝 Draft: ${{ env.POST_TITLE }}"
+          labels: draft-post
+          body: |
+            Auto-generated draft, ready for human review.
+
+            - **Topic source:** `${{ env.TOPIC_SOURCE }}`
+            - **File:** `src/content/blog/${{ env.POST_SLUG }}.md`
+
+            **Before merging (this blog covers real people — please don't skip step 1):**
+            1. **Fact-check.** Verify every specific claim (dates, chart/award facts, quotes)
+               against a reputable source before merging. This blog only covers well-documented
+               public achievements — if anything reads like rumor, speculation, or a private
+               matter, cut it or close this PR instead of merging.
+            2. Make sure it adds real context beyond a generic summary (tighten anything generic/filler).
+            3. Check the title/description read naturally and aren't keyword-stuffed.
+            4. **Add the planned images.** Open the changed `.md` file — the top has an HTML
+               comment listing exactly which image files this post needs, with a ready-to-use
+               AI image generation prompt for each (no real people's likeness — generic/editorial
+               style only). Copy each prompt into https://www.bing.com/images/create (free), save
+               the result with the exact filename listed, and add them to
+               `public/images/blog/<slug>/`, then commit them to this same branch (either locally
+               with `git`, or via GitHub's web UI: switch to this PR's branch and use
+               "Add file → Upload files").
+            5. Merge this PR to publish (Vercel will auto-deploy on merge to `main`).
+
+            If this post shouldn't be published, just close this PR without merging —
+            nothing goes live until it's merged.

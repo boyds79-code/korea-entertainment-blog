@@ -1,0 +1,106 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+}
+const { title, description, canonicalPath = Astro.url.pathname } = Astro.props;
+const siteUrl = Astro.site ?? new URL('https://your-domain-here.com');
+const canonicalURL = new URL(canonicalPath, siteUrl);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a class="brand" href="/">K-Entertainment, Explained</a>
+        <div class="links">
+          <a href="/">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy</a>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>&copy; {new Date().getFullYear()} K-Entertainment, Explained. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --text: #1a1a1a;
+    --muted: #666;
+    --bg: #fff;
+    --accent: #c0227a;
+    --max-width: 760px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.65;
+  }
+  main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 4rem;
+  }
+  .site-header {
+    border-bottom: 1px solid #eee;
+  }
+  .site-header nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+  }
+  .brand {
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 1.1rem;
+  }
+  .links a {
+    margin-left: 1rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .links a:hover { color: var(--accent); }
+  a { color: var(--accent); }
+  h1, h2, h3 { line-height: 1.3; }
+  img { max-width: 100%; }
+  .site-footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    padding: 2rem 0;
+    border-top: 1px solid #eee;
+  }
+</style>

@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const allPosts = await getCollection('blog', ({ data }) => data.draft !== true);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<Base
+  title="K-Entertainment, Explained — Korean Entertainment News for International Readers"
+  description="Explainers on Korean entertainment stories that made international news: K-pop milestones, K-drama and film breakouts, award wins, and cultural moments."
+>
+  <h1>K-Entertainment, Explained</h1>
+  <p>The background behind Korean entertainment stories that made news outside Korea, written for readers who saw a headline and want the context.</p>
+
+  <ul class="post-list">
+    {posts.map((post) => (
+      <li>
+        {post.data.heroImage && (
+          <a href={`/blog/${post.slug}/`} class="thumb">
+            <img src={post.data.heroImage} alt={post.data.heroImageAlt || post.data.title} loading="lazy" />
+          </a>
+        )}
+        <div>
+          <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+          <p class="excerpt">{post.data.description}</p>
+          <p class="date">{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+
+  {posts.length === 0 && <p><em>No posts yet — this is a fresh install. Add your first post to <code>src/content/blog/</code>.</em></p>}
+</Base>
+
+<style>
+  .post-list { list-style: none; padding: 0; }
+  .post-list li { margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .post-list .thumb { flex-shrink: 0; width: 140px; }
+  .post-list .thumb img { width: 140px; height: 100px; object-fit: cover; border-radius: 6px; display: block; }
+  .post-list a { font-size: 1.2rem; font-weight: 600; text-decoration: none; }
+  .excerpt { color: #444; margin: 0.4rem 0; }
+  .date { color: #999; font-size: 0.8rem; margin: 0; }
+</style>
