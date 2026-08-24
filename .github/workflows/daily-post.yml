@@ -10,8 +10,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  workflows: write
-
+ 
 concurrency:
   group: daily-post
   cancel-in-progress: false
