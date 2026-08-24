@@ -47,12 +47,25 @@ export async function generateImage({ prompt, apiKey, model }) {
     }
 
     const data = await res.json();
+    // Interactions API 응답 구조가 몇 차례 바뀌었습니다. 아래는 알려진 형태들을 순서대로 시도합니다:
+    // 1) 최상위 output_image.data (SDK 편의 프로퍼티 방식)
+    // 2) { interaction: { output_image: { data } } } (구버전 래핑 형태)
+    // 3) steps[].content[] 안에서 type:"image"인 항목의 data (2026-05 이후 steps 배열 방식)
+    // 4) candidates[].content.parts[].inlineData.data (구 generateContent 방식, 혹시 몰라 유지)
+    const imageFromSteps = Array.isArray(data?.steps)
+      ? data.steps
+          .flatMap((s) => (Array.isArray(s?.content) ? s.content : []))
+          .find((c) => c?.type === 'image')?.data
+      : undefined;
+
     const base64 =
+      data?.output_image?.data ||
       data?.interaction?.output_image?.data ||
+      imageFromSteps ||
       data?.candidates?.[0]?.content?.parts?.find((p) => p.inlineData)?.inlineData?.data;
 
     if (!base64) {
-      console.warn('[gemini-images] 응답에서 이미지 데이터를 찾지 못했습니다:', JSON.stringify(data).slice(0, 300));
+      console.warn('[gemini-images] 응답에서 이미지 데이터를 찾지 못했습니다:', JSON.stringify(data).slice(0, 800));
       return null;
     }
 
