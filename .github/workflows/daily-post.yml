@@ -10,7 +10,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
-
+ 
 concurrency:
   group: daily-post
   cancel-in-progress: false
@@ -21,6 +21,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # 기본 GITHUB_TOKEN은 .github/workflows/ 파일이 포함된 브랜치를 절대 못 올립니다
+          # (GitHub의 하드코딩된 제한이라 permissions 블록으로도 못 풀어요) — 그래서
+          # 'workflow' 권한이 있는 개인 액세스 토큰(PAT_TOKEN)을 대신 씁니다.
+          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -45,6 +50,7 @@ jobs:
       - name: Open pull request for human review
         uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.PAT_TOKEN }}
           commit-message: "New draft: ${{ env.POST_TITLE }}"
           branch: "draft/${{ env.POST_SLUG }}"
           delete-branch: true
