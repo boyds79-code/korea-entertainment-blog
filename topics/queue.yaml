@@ -2,55 +2,80 @@
 # 매일 자동 실행(daily-post.yml)이 돌 때마다 맨 위 항목을 하나 꺼내서
 # 초안을 생성하고, 사용된 항목은 이 파일에서 자동으로 제거됩니다.
 #
-# 이 블로그는 실존 연예인을 다루기 때문에 (korea-blog/korea-recipes-blog와 달리)
-# 큐가 비어도 자동으로 "오늘의 트렌드 헤드라인"을 가져와 글을 쓰지 않습니다 —
-# 큐가 비면 다음 실행이 에러로 멈춥니다. 아래 있는 것처럼 사실관계가 확실하고
-# (수상/차트기록/공식발표/글로벌 흥행 등 이미 널리 보도된 것) 사생활·소문·논란이
-# 아닌 주제만 추가해주세요.
-#
-# 형식:
-# - topic: "글 제목/주제 (영문 권장, 검색될 만한 표현으로)"
-#   notes: "이 주제에 대해 꼭 다뤘으면 하는 포인트 (선택, 없으면 지워도 됨)"
-
-- topic: "How KPop Demon Hunters swept the 2026 Oscars for Korea"
-  notes: "Won Best Animated Feature and Best Original Song ('Golden') at the 98th Academy Awards (March 15, 2026). Director Maggie Kang's on-record acceptance line ('This is for Korea and Koreans everywhere') is documented and can be quoted. Focus on the film/song's award facts, not personal details about the voice cast."
-- topic: "Why 'Golden' from KPop Demon Hunters is the first K-pop-style song to win both a Grammy and an Oscar"
-  notes: "Won Best Song Written for Visual Media at the 2026 Grammys (Feb 1, 2026) and Best Original Song at the 2026 Oscars — a first for a K-pop-style track. Stick to the award/chart facts."
-- topic: "How KPop Demon Hunters became Netflix's most-watched film of all time"
-  notes: "Passed 500 million views since its June 20, 2025 release, per Netflix's own viewership figures. It's an animated fictional-character film, so image prompts should reference the film's visuals/awards imagery, not any real person's likeness."
-- topic: "How the musical Maybe Happy Ending made Tony Awards history for Korea"
-  notes: "Won 6 Tony Awards including Best Musical in 2025 (composer Will Aronson, lyricist Hue Park) — first original Korean musical to win Best Musical. Focus on the show/award facts."
-- topic: "Why Squid Game Season 3's finale broke a new kind of Netflix record"
-  notes: "Released June 27, 2025 as the series conclusion — the first Netflix show to debut at No. 1 in every country simultaneously. Stick to the release/chart record, not plot spoiler drama or cast personal lives."
-- topic: "How a Korean conductor made La Scala history in 2025"
-  notes: "Chung Myung-whun was appointed music director of Italy's La Scala opera house in May 2025 — the first Asian conductor to lead it (tenure starts 2027). Focus on the career/appointment facts."
-- topic: "How Parasite's historic 2020 Oscar sweep changed Hollywood's view of foreign films"
-  notes: "Best Picture, Director, Original Screenplay, International Feature — first non-English Best Picture winner. Stick to award facts and industry reaction, not personal claims about cast/crew."
-- topic: "Why Squid Game became Netflix's biggest show ever"
-  notes: "2021 global viewership record + 2022 Emmy wins (Lee Jung-jae, Hwang Dong-hyuk) as first non-English-language nominees/winners in those categories."
-- topic: "How Gangnam Style broke the internet and YouTube's view-count system"
-  notes: "2012 phenomenon, first video to hit 1 billion YouTube views, forced YouTube to update its view counter."
-- topic: "Blackpink's historic Coachella headline set explained"
-  notes: "2023 — first K-pop act to headline Coachella. Focus on the cultural milestone, not personal details about members."
-- topic: "BTS's UN speeches and why they mattered to their global fanbase"
-  notes: "Reference only their actual public UN appearances (2018, 2021) — no invented quotes, only well-documented public statements."
-- topic: "How BTS's military enlistment became international news"
-  notes: "Focus on South Korea's mandatory service system and why the global reaction was so large — factual, not speculative about individuals' feelings."
-- topic: "Why Crash Landing on You became a global Netflix phenomenon"
-  notes: "Focus on the show's reception and what made it resonate internationally."
-- topic: "How Extraordinary Attorney Woo became an unexpected global hit"
-  notes: "2022 Netflix global top 10 phenomenon and its cultural impact/reception abroad."
-- topic: "Why Physical: 100 became a global Netflix hit reality show"
-  notes: "2023 — one of Netflix's most-watched non-English reality shows globally."
-- topic: "The story behind Train to Busan's global horror-genre acclaim"
-  notes: "2016 Cannes Midnight Screening + international box office/critical reception."
-- topic: "How the term 'Hallyu' (Korean Wave) explains K-pop and K-drama's global rise"
-  notes: "General explainer of the term/phenomenon and its history — good broad evergreen-ish entertainment explainer."
-- topic: "Why K-pop fandoms (like BTS's ARMY) became a global cultural and even political force"
-  notes: "Focus on documented fandom organizing (chart campaigns, charity donations) — avoid speculation about individual fans/celebrities."
-- topic: "How Oldboy's Cannes win put Korean cinema on the international map"
-  notes: "2004 Grand Prix at Cannes — early milestone before the Parasite/Squid Game wave."
-- topic: "Why Korean survival and reality shows became a global streaming trend"
-  notes: "Broader trend piece — Physical:100, Culinary Class Wars, etc. Stick to show/format facts, not cast personal lives."
-- topic: "How K-pop's global touring boom changed the concert industry"
-  notes: "Focus on stadium tour scale, ticket demand, economic impact — industry-level story, not personal details."
+# 이 블로그는 실존 연예인을 다루므로 자동 트렌드 탐색을 쓰지 않습니다 — 큐가 비면
+# 다음 실행이 실패합니다. 사실관계가 확실하고(수상/차트기록/공식발표 등),
+# 사생활·소문·논란성 이슈가 아닌 주제만 추가해주세요.
+- topic: >-
+    Why 'Golden' from KPop Demon Hunters is the first K-pop-style song to win both a Grammy and an
+    Oscar
+  notes: >-
+    Won Best Song Written for Visual Media at the 2026 Grammys (Feb 1, 2026) and Best Original Song
+    at the 2026 Oscars — a first for a K-pop-style track. Stick to the award/chart facts.
+- topic: How KPop Demon Hunters became Netflix's most-watched film of all time
+  notes: >-
+    Passed 500 million views since its June 20, 2025 release, per Netflix's own viewership figures.
+    It's an animated fictional-character film, so image prompts should reference the film's
+    visuals/awards imagery, not any real person's likeness.
+- topic: How the musical Maybe Happy Ending made Tony Awards history for Korea
+  notes: >-
+    Won 6 Tony Awards including Best Musical in 2025 (composer Will Aronson, lyricist Hue Park) —
+    first original Korean musical to win Best Musical. Focus on the show/award facts.
+- topic: Why Squid Game Season 3's finale broke a new kind of Netflix record
+  notes: >-
+    Released June 27, 2025 as the series conclusion — the first Netflix show to debut at No. 1 in
+    every country simultaneously. Stick to the release/chart record, not plot spoiler drama or cast
+    personal lives.
+- topic: How a Korean conductor made La Scala history in 2025
+  notes: >-
+    Chung Myung-whun was appointed music director of Italy's La Scala opera house in May 2025 — the
+    first Asian conductor to lead it (tenure starts 2027). Focus on the career/appointment facts.
+- topic: How Parasite's historic 2020 Oscar sweep changed Hollywood's view of foreign films
+  notes: >-
+    Best Picture, Director, Original Screenplay, International Feature — first non-English Best
+    Picture winner. Stick to award facts and industry reaction, not personal claims about cast/crew.
+- topic: Why Squid Game became Netflix's biggest show ever
+  notes: >-
+    2021 global viewership record + 2022 Emmy wins (Lee Jung-jae, Hwang Dong-hyuk) as first
+    non-English-language nominees/winners in those categories.
+- topic: How Gangnam Style broke the internet and YouTube's view-count system
+  notes: >-
+    2012 phenomenon, first video to hit 1 billion YouTube views, forced YouTube to update its view
+    counter.
+- topic: Blackpink's historic Coachella headline set explained
+  notes: >-
+    2023 — first K-pop act to headline Coachella. Focus on the cultural milestone, not personal
+    details about members.
+- topic: BTS's UN speeches and why they mattered to their global fanbase
+  notes: >-
+    Reference only their actual public UN appearances (2018, 2021) — no invented quotes, only
+    well-documented public statements.
+- topic: How BTS's military enlistment became international news
+  notes: >-
+    Focus on South Korea's mandatory service system and why the global reaction was so large —
+    factual, not speculative about individuals' feelings.
+- topic: Why Crash Landing on You became a global Netflix phenomenon
+  notes: Focus on the show's reception and what made it resonate internationally.
+- topic: How Extraordinary Attorney Woo became an unexpected global hit
+  notes: 2022 Netflix global top 10 phenomenon and its cultural impact/reception abroad.
+- topic: 'Why Physical: 100 became a global Netflix hit reality show'
+  notes: 2023 — one of Netflix's most-watched non-English reality shows globally.
+- topic: The story behind Train to Busan's global horror-genre acclaim
+  notes: 2016 Cannes Midnight Screening + international box office/critical reception.
+- topic: How the term 'Hallyu' (Korean Wave) explains K-pop and K-drama's global rise
+  notes: >-
+    General explainer of the term/phenomenon and its history — good broad evergreen-ish
+    entertainment explainer.
+- topic: Why K-pop fandoms (like BTS's ARMY) became a global cultural and even political force
+  notes: >-
+    Focus on documented fandom organizing (chart campaigns, charity donations) — avoid speculation
+    about individual fans/celebrities.
+- topic: How Oldboy's Cannes win put Korean cinema on the international map
+  notes: 2004 Grand Prix at Cannes — early milestone before the Parasite/Squid Game wave.
+- topic: Why Korean survival and reality shows became a global streaming trend
+  notes: >-
+    Broader trend piece — Physical:100, Culinary Class Wars, etc. Stick to show/format facts, not
+    cast personal lives.
+- topic: How K-pop's global touring boom changed the concert industry
+  notes: >-
+    Focus on stadium tour scale, ticket demand, economic impact — industry-level story, not personal
+    details.
