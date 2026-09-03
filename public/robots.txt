@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://your-domain-here.com/sitemap-index.xml
+Sitemap: https://enter.hey-driver.com/sitemap-index.xml
