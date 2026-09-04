@@ -5,10 +5,6 @@
 # 이 큐가 비면 자동으로 "오늘의 실제 한국 연예 뉴스" 트렌드 탐색 모드로 전환됩니다 —
 # 여기에 넣는 주제도 최근(대략 한 달 이내) 것 위주로 유지해주세요. 오래된 이슈는
 # 신선도가 떨어지니 넣지 않는 걸 권장합니다.
-- topic: How the musical Maybe Happy Ending made Tony Awards history for Korea
-  notes: >-
-    Won 6 Tony Awards including Best Musical in 2025 (composer Will Aronson, lyricist Hue Park) —
-    first original Korean musical to win Best Musical. Focus on the show/award facts.
 - topic: Why Squid Game Season 3's finale broke a new kind of Netflix record
   notes: >-
     Released June 27, 2025 as the series conclusion — the first Netflix show to debut at No. 1 in
