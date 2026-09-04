@@ -20,6 +20,14 @@ async function main() {
     model: process.env.CLAUDE_MODEL,
   });
 
+  const similarExisting = findSimilarExistingPost(draft.title);
+  if (similarExisting) {
+    throw new Error(
+      `생성된 제목 "${draft.title}"이(가) 이미 있는 글 "${similarExisting}"과(와) 너무 비슷합니다 (같은 이슈를 다른 표현으로 재작성했을 가능성). ` +
+        `중복 발행을 막기 위해 이번 실행은 여기서 멈춥니다 — topics/queue.yaml이나 트렌드 소스에서 이 주제가 왜 다시 나왔는지 확인해주세요.`
+    );
+  }
+
   const today = new Date().toISOString().slice(0, 10);
   let slug = slugify(draft.title);
   let filePath = path.join(BLOG_DIR, `${slug}.md`);
@@ -136,6 +144,51 @@ async function main() {
 
 function yamlString(s) {
   return JSON.stringify(String(s));
+}
+
+// 불용어를 뺀 "의미 있는 단어" 집합끼리 겹치는 비율(자카드 유사도)로 비교합니다.
+// 하이픈/대소문자 차이("K-Pop" vs "KPop") 정도는 자연스럽게 흡수되고,
+// 같은 프랜차이즈를 다룬 서로 다른 사실의 글(예: 오스카 수상 글 vs 그래미 수상 글)은
+// 공유 단어가 적어서 오탐하지 않도록 임계값을 보수적으로 잡았습니다.
+const STOPWORDS = new Set([
+  'a', 'an', 'the', 'of', 'in', 'on', 'at', 'to', 'for', 'and', 'or', 'is', 'are', 'was', 'were',
+  'how', 'why', 'what', 'this', 'that', 'its', 'it', 'as', 'by', 'with', 'from', 'be', 'made',
+]);
+
+function titleWordSet(title) {
+  return new Set(
+    title
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((w) => w.length > 1 && !STOPWORDS.has(w))
+  );
+}
+
+function jaccardSimilarity(a, b) {
+  if (a.size === 0 || b.size === 0) return 0;
+  let intersection = 0;
+  for (const w of a) if (b.has(w)) intersection += 1;
+  const union = a.size + b.size - intersection;
+  return intersection / union;
+}
+
+const SIMILARITY_THRESHOLD = 0.65;
+
+function findSimilarExistingPost(newTitle) {
+  if (!fs.existsSync(BLOG_DIR)) return null;
+  const newWords = titleWordSet(newTitle);
+  for (const file of fs.readdirSync(BLOG_DIR)) {
+    if (!file.endsWith('.md')) continue;
+    const content = fs.readFileSync(path.join(BLOG_DIR, file), 'utf8');
+    const match = content.match(/^title:\s*"((?:[^"\\]|\\.)*)"/m);
+    if (!match) continue;
+    const existingTitle = JSON.parse(`"${match[1]}"`);
+    const existingWords = titleWordSet(existingTitle);
+    if (jaccardSimilarity(newWords, existingWords) >= SIMILARITY_THRESHOLD) {
+      return existingTitle;
+    }
+  }
+  return null;
 }
 
 main().catch((err) => {
