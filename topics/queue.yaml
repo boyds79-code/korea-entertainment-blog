@@ -5,27 +5,10 @@
 # 이 큐가 비면 자동으로 "오늘의 실제 한국 연예 뉴스" 트렌드 탐색 모드로 전환됩니다 —
 # 여기에 넣는 주제도 최근(대략 한 달 이내) 것 위주로 유지해주세요. 오래된 이슈는
 # 신선도가 떨어지니 넣지 않는 걸 권장합니다.
-- topic: Why Squid Game Season 3's finale broke a new kind of Netflix record
-  notes: >-
-    Released June 27, 2025 as the series conclusion — the first Netflix show to debut at No. 1 in
-    every country simultaneously. Stick to the release/chart record, not plot spoiler drama or cast
-    personal lives.
-- topic: How a Korean conductor made La Scala history in 2025
-  notes: >-
-    Chung Myung-whun was appointed music director of Italy's La Scala opera house in May 2025 — the
-    first Asian conductor to lead it (tenure starts 2027). Focus on the career/appointment facts.
-- topic: How Parasite's historic 2020 Oscar sweep changed Hollywood's view of foreign films
-  notes: >-
-    Best Picture, Director, Original Screenplay, International Feature — first non-English Best
-    Picture winner. Stick to award facts and industry reaction, not personal claims about cast/crew.
-- topic: Why Squid Game became Netflix's biggest show ever
-  notes: >-
-    2021 global viewership record + 2022 Emmy wins (Lee Jung-jae, Hwang Dong-hyuk) as first
-    non-English-language nominees/winners in those categories.
-- topic: How Gangnam Style broke the internet and YouTube's view-count system
-  notes: >-
-    2012 phenomenon, first video to hit 1 billion YouTube views, forced YouTube to update its view
-    counter.
+#
+# 2026-09-04: 이미 발행된 글과 겹치는 아래 5개 항목을 정리했습니다 (오래된 queue.yaml
+# 버전이 병합되며 되살아났던 것으로 보입니다) — Squid Game Season 3 finale, La Scala
+# conductor, Parasite Oscar sweep, Squid Game Netflix record, Gangnam Style.
 - topic: Blackpink's historic Coachella headline set explained
   notes: >-
     2023 — first K-pop act to headline Coachella. Focus on the cultural milestone, not personal
