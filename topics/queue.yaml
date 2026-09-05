@@ -5,14 +5,6 @@
 # 이 큐가 비면 자동으로 "오늘의 실제 한국 연예 뉴스" 트렌드 탐색 모드로 전환됩니다 —
 # 여기에 넣는 주제도 최근(대략 한 달 이내) 것 위주로 유지해주세요. 오래된 이슈는
 # 신선도가 떨어지니 넣지 않는 걸 권장합니다.
-#
-# 2026-09-04: 이미 발행된 글과 겹치는 아래 5개 항목을 정리했습니다 (오래된 queue.yaml
-# 버전이 병합되며 되살아났던 것으로 보입니다) — Squid Game Season 3 finale, La Scala
-# conductor, Parasite Oscar sweep, Squid Game Netflix record, Gangnam Style.
-- topic: Blackpink's historic Coachella headline set explained
-  notes: >-
-    2023 — first K-pop act to headline Coachella. Focus on the cultural milestone, not personal
-    details about members.
 - topic: BTS's UN speeches and why they mattered to their global fanbase
   notes: >-
     Reference only their actual public UN appearances (2018, 2021) — no invented quotes, only
