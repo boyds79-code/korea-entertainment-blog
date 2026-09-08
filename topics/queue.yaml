@@ -5,8 +5,6 @@
 # 이 큐가 비면 자동으로 "오늘의 실제 한국 연예 뉴스" 트렌드 탐색 모드로 전환됩니다 —
 # 여기에 넣는 주제도 최근(대략 한 달 이내) 것 위주로 유지해주세요. 오래된 이슈는
 # 신선도가 떨어지니 넣지 않는 걸 권장합니다.
-- topic: Why Crash Landing on You became a global Netflix phenomenon
-  notes: Focus on the show's reception and what made it resonate internationally.
 - topic: How Extraordinary Attorney Woo became an unexpected global hit
   notes: 2022 Netflix global top 10 phenomenon and its cultural impact/reception abroad.
 - topic: 'Why Physical: 100 became a global Netflix hit reality show'
